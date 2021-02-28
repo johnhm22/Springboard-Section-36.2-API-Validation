@@ -78,8 +78,8 @@ describe("POST /books", () => {
 
 
 describe("DELETE /books/:id", () => {
-    test("Delete a book", async () => {
+    test("Deletes a book", async () => {
         const res = await request(app).delete(`books/${book_isbn}`);
-        expect(response.body).toEqual({message: "Book deleted"});
+        expect(res.body).toEqual({message: "Book deleted"});
     })
 })
