@@ -17,12 +17,12 @@ let data = {
     publisher: 'Homeprint Press',
     title: 'Testing with supertest',
     year: 2021
-}
+}, result = 0;
 
 
 
-beforeEach(async function(){
-    const result = await db.query(
+beforeAll(async function(){
+     result = await db.query(
         `INSERT INTO books (
             isbn,
             amazon_url,
@@ -34,23 +34,22 @@ beforeEach(async function(){
             year
        ) 
          VALUES (
-           ${data.isbn},
-           ${data.amazon_url},
-           ${data.author},
-           ${data.language},
-           ${data.pages},
-           ${data.publisher},
-           ${data.title},
-           ${data.year}
+           '${data.isbn}',
+           '${data.amazon_url}',
+           '${data.author}',
+           '${data.language}',
+           '${data.pages}',
+           '${data.publisher}',
+           '${data.title}',
+           '${data.year}'
             )`
         );
-        // book_isbn = result.rows[0].isbn;
          });
 
         
 
-afterEach(async function(){
-    await db.query(`DELETE FROM books`);
+afterAll(async function(){
+    await db.query(`TRUNCATE TABLE books`);
     });
 
 
@@ -65,7 +64,10 @@ afterEach(async function(){
 
 describe("GET /books/:isbn", () => {
     test ("Get a book", async () =>{
+        // const res = await request(app).get(`/books/${data.isbn}`);
         const res = await request(app).get(`/books/${data.isbn}`);
+        // console.log(res);
+        // console.log(result);
         expect(res.statusCode).toBe(200);
     })
 });
